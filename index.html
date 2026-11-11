@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Good Luck! You've Got This!</title>
+    <title>good luck! you've got this!</title>
     <style>
         :root {
             --cream: #FDFBF7;
@@ -17,14 +17,26 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--cream);
+            background-color: var(--pastel-yellow);
             color: var(--text-dark);
-            text-align: center;
-            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
         }
 
-        h1, h2 {
+        h1 {
             color: var(--brown);
+            margin-bottom: 5px;
+            font-size: 2.5rem;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--text-dark);
         }
 
         /* Confetti Container */
@@ -40,155 +52,69 @@
 
         .heart {
             position: absolute;
-            font-size: 24px;
-            animation: floatUp 2s ease-out forwards;
+            font-size: 30px;
+            animation: explode 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
             opacity: 1;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+        @keyframes explode {
+            0% { 
+                transform: translate(0, 0) scale(0.5) rotate(0deg); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot)); 
+                opacity: 0; 
+            }
         }
 
         /* Face Petting Section */
-        .petting-section {
-            padding: 40px 20px;
-            background-color: var(--pastel-yellow);
-        }
-
         .face-container {
             position: relative;
             display: inline-block;
             cursor: pointer;
-            transition: transform 0.1s;
+            transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
         }
 
         .face-container:active {
-            transform: scale(0.95);
+            transform: scale(0.85);
         }
 
         .face-image {
-            width: 180px;
-            height: 180px;
+            width: 280px;
+            height: 280px;
             border-radius: 50%;
             object-fit: cover;
-            border: 6px solid var(--sage-green);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-
-        /* Room Layout Section */
-        .room-section {
-            padding: 40px 20px;
+            border: 10px solid var(--sage-green);
+            box-shadow: 0 15px 30px rgba(139, 115, 85, 0.3);
             background-color: var(--cream);
         }
-
-        .room-container {
-            position: relative;
-            width: 90%;
-            max-width: 800px;
-            height: 500px;
-            margin: 0 auto;
-            background-color: var(--sage-green);
-            border: 8px solid var(--brown);
-            border-radius: 16px;
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.4) 2px, transparent 2px),
-                linear-gradient(90deg, rgba(255,255,255,0.4) 2px, transparent 2px);
-            background-size: 40px 40px;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.05);
-        }
-
-        .interactive-item {
-            position: absolute;
-            font-size: 40px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
-        }
-
-        .interactive-item:hover {
-            transform: scale(1.2) rotate(-5deg);
-        }
-
-        /* Positioning the Items */
-        #highland-cow { top: 70%; left: 15%; font-size: 55px; }
-        #brownie { top: 45%; left: 40%; }
-        #judo-gi { top: 20%; left: 75%; font-size: 50px; }
-        #milo-packet { top: 50%; left: 60%; }
-        #rubberband { top: 80%; left: 80%; font-size: 30px; }
 
         /* Notification Toast */
         #toast {
             visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
+            min-width: 280px;
+            max-width: 80%;
             background-color: var(--brown);
             color: var(--cream);
             text-align: center;
-            border-radius: 8px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 18px 24px;
             position: fixed;
             z-index: 100;
-            left: 50%;
-            bottom: 30px;
-            font-size: 18px;
+            bottom: -50px;
+            font-size: 20px;
             font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
             opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
+            transition: opacity 0.3s, bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.3s;
         }
 
         #toast.show {
             visibility: visible;
             opacity: 1;
-            bottom: 50px;
-        }
-
-        /* Polaroid Gallery Section */
-        .gallery-section {
-            padding: 50px 20px;
-            background-color: var(--pastel-yellow);
-        }
-
-        .polaroid-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .polaroid {
-            background: white;
-            padding: 15px 15px 40px 15px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            transform: rotate(-3deg);
-            transition: transform 0.3s;
-            width: 200px;
-        }
-
-        .polaroid:nth-child(even) {
-            transform: rotate(4deg);
-        }
-
-        .polaroid:hover {
-            transform: scale(1.05) rotate(0deg);
-            z-index: 10;
-        }
-
-        .polaroid img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            background-color: #eee;
-        }
-
-        .caption {
-            margin-top: 15px;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            font-size: 14px;
-            color: var(--text-dark);
+            bottom: 60px;
         }
     </style>
 </head>
@@ -196,102 +122,98 @@
 
     <div id="confetti-container"></div>
 
-    <!-- Petting Section -->
-    <section class="petting-section">
-        <h1>Pet for Good Luck! 🍀</h1>
-        <p>Click my face for a burst of love!</p>
-        <div class="face-container" onclick="createConfetti(event)">
-            <img src="photo_13_2026-11-11_20-11-10.jpg" 
-        </div>
-    </section>
+    <h1>tap for good luck!</h1>
+    <p>give me a pet for a boost of energy!</p>
+    
+    <div class="face-container" onclick="petFace(event)">
+        <img src="photo_13_2026-11-11_20-11-10.jpg" alt="my face" class="face-image" onerror="this.src='https://via.placeholder.com/280/D4E0CE/8B7355?text=Put+Face+Here'">
+    </div>
 
-    <!-- Hidden Items Room Section -->
-    <section class="room-section">
-        <h2>Cozy Study Room</h2>
-        <p>Find and click the items scattered around the room for a special message!</p>
-        
-        <div class="room-container">
-            <div class="interactive-item" id="highland-cow" onclick="showToast('Sending you the biggest, fluffiest hug! You\'ve got this! 🐮')">🐮</div>
-            <div class="interactive-item" id="brownie" onclick="showToast('A sweet chocolatey treat for my hardworking boy! 🤎')">🟫</div>
-            <div class="interactive-item" id="judo-gi" onclick="showToast('You\'re going to throw this exam on the mat! Ippon! 🥋')">🥋</div>
-            <div class="interactive-item" id="milo-packet" onclick="showToast('Fuel up! Get that Milo energy going and crush this! 🧃')">🧃</div>
-            <div class="interactive-item" id="rubberband" onclick="showToast('Just to tie up those loose ends before the exam! I believe in you! ➰')">➰</div>
-        </div>
-    </section>
-
-    <!-- Polaroid Gallery Section -->
-    <section class="gallery-section">
-        <h2>Our Favorite Memories</h2>
-        <div class="polaroid-grid">
-            <!-- Polaroid 1 -->
-            <div class="polaroid">
-                <img src="memory1.jpg" alt="Memory 1" onerror="this.src='https://via.placeholder.com/200'">
-                <div class="caption">So proud of you!</div>
-            </div>
-            <!-- Polaroid 2 -->
-            <div class="polaroid">
-                <img src="memory2.jpg" alt="Memory 2" onerror="this.src='https://via.placeholder.com/200'">
-                <div class="caption">You're going to ace this.</div>
-            </div>
-            <!-- Polaroid 3 -->
-            <div class="polaroid">
-                <img src="memory3.jpg" alt="Memory 3" onerror="this.src='https://via.placeholder.com/200'">
-                <div class="caption">Can't wait to celebrate!</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Notification Toast Element -->
-    <div id="toast">Message goes here!</div>
+    <div id="toast">message goes here</div>
 
     <script>
-        // Function to create heart confetti when face is clicked
+        const messages = [
+            "you are going to do amazing!",
+            "i believe in you so much!",
+            "just a little more studying, you can do it!",
+            "you are the smartest person i know hehe",
+            "i am so incredibly proud of you <3",
+            "sending you the biggest huggggggggggg",
+            "you have worked so hard for this!",
+            "don't forget to take a breather!",
+            "you are going to ace this!",
+            "i am always cheering you on <3",
+            "all your hard work will pay off ~",
+            "you have totally got this in the bag!",
+            "remember to drink some water!!!!",
+            "i can't wait to celebrate with you after muehehe",
+            "you are a superstar baby",
+            "keeping you in my thoughts today and everyday i miss you",
+            "you are stronger than any exam rawr",
+            "take it one question at a time!",
+            "you make me so proud every single day!",
+            "i love seeing you try your best <3",
+            "you're doing so well, keep it up hehe",
+            "everything is going to be okay hehe"
+        ];
+
+        let toastTimeout;
+
+        function petFace(event) {
+            createConfetti(event);
+            showRandomMessage();
+        }
+
         function createConfetti(event) {
             const container = document.getElementById('confetti-container');
             const face = event.currentTarget;
             const rect = face.getBoundingClientRect();
             
-            // Generate 8 hearts per click
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 30; i++) {
                 const heart = document.createElement('div');
                 heart.classList.add('heart');
-                heart.innerHTML = '💖';
                 
-                // Randomize starting positions slightly around the face
-                const startX = rect.left + (rect.width / 2) + (Math.random() * 80 - 40);
-                const startY = rect.top + (Math.random() * 40);
+                const icons = ['💖', '✨', '🍀', '🤎', '⭐'];
+                heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
                 
-                heart.style.left = `${startX}px`;
-                heart.style.top = `${startY}px`;
+                const startX = rect.left + (rect.width / 2);
+                const startY = rect.top + (rect.height / 2);
                 
-                // Randomize animation direction
-                const xMovement = (Math.random() - 0.5) * 100;
-                heart.style.setProperty('--x-move', `${xMovement}px`);
-                heart.style.animation = `floatUp ${1 + Math.random()}s ease-out forwards`;
+                heart.style.left = `${startX - 15}px`; 
+                heart.style.top = `${startY - 15}px`;
+                
+                const angle = Math.random() * Math.PI * 2; 
+                const velocity = 150 + Math.random() * 250; 
+                
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity - 50; 
+                const rot = (Math.random() - 0.5) * 720; 
+                
+                heart.style.setProperty('--tx', `${tx}px`);
+                heart.style.setProperty('--ty', `${ty}px`);
+                heart.style.setProperty('--rot', `${rot}deg`);
                 
                 container.appendChild(heart);
                 
-                // Remove heart from DOM after animation completes
                 setTimeout(() => {
                     heart.remove();
-                }, 2000);
+                }, 1200);
             }
         }
 
-        // Function to show the pop-up notification toast
-        let toastTimeout;
-        function showToast(message) {
+        function showRandomMessage() {
             const toast = document.getElementById("toast");
-            toast.innerText = message;
-            toast.className = "show";
             
-            // Clear any existing timeout so messages don't overlap strangely
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            toast.innerText = randomMsg;
+            
+            toast.classList.add("show");
+            
             clearTimeout(toastTimeout);
             
-            // Hide toast after 3.5 seconds
             toastTimeout = setTimeout(function(){ 
-                toast.className = toast.className.replace("show", ""); 
-            }, 3500);
+                toast.classList.remove("show"); 
+            }, 3000);
         }
     </script>
 </body>
